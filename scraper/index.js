@@ -5,23 +5,20 @@ const limiter = new RateLimiter(1, 1500);
 
 const { baseUrl, query, itemsPerPage, ratingsMap, selectors, regEx } = require('./utils')
 
-let pages = 1;
-const restaurants = [];
-
-const run = async () => {
+const run = () => {
   limiter.removeTokens(1, () => {
     scrape(1);
   });
 }
 
-const setTotalPages = $ => {
+const getTotalPages = $ => {
   const totalItems = Number($('h1').text().match(regEx.totalItems)[0].replace(/[\.,]/g, ''));
-  pages = totalItems / itemsPerPage;
+  return Math.ceil(totalItems / itemsPerPage);
 }
 
-const scrape = async (page) => {
+const scrape = async (currentPage, totalPages = 1, restaurants = []) => {
   const options = {
-    uri: baseUrl + query + page,
+    uri: baseUrl + query + currentPage,
     transform: body => {
       return cheerio.load(body);
     }
@@ -32,8 +29,8 @@ const scrape = async (page) => {
     console.log(err)
   });
 
-  if (pages === 1) {
-    setTotalPages($);
+  if (totalPages === 1) {
+    totalPages = getTotalPages($);
   }
 
   const cards = $(selectors.cards);
@@ -51,11 +48,11 @@ const scrape = async (page) => {
     const lng = $card.data('lng');
 
     restaurants.push({ rating, year, img, name, link, location, type, coords: { lat, lng } });
-  })
+  });
 
-  if (page <= pages) {
+  if (currentPage <= totalPages) {
     limiter.removeTokens(1, () => {
-      scrape(page + 1);
+      scrape(currentPage + 1, totalPages, restaurants);
     });
   }
 }
