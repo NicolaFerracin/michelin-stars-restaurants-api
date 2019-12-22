@@ -11,6 +11,7 @@ const ratingsMap = {
 };
 
 const selectors = {
+  cards: '.card__menu',
   rating: '.card__menu-content--rating>.fa-michelin',
   year: '.card__menu-content--rating>span',
   img: '.card__menu-image>a>noscript',
