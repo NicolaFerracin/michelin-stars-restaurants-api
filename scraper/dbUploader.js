@@ -14,7 +14,7 @@ const connection = mysql.createConnection({
 connection.connect();
 
 restaurants.forEach(restaurant => {
-  connection.query('INSERT INTO restaurants SET ?', restaurant, function (error, results, fields) {
+  connection.query(`INSERT INTO ${process.env.MY_SQL_TABLE} SET ?`, restaurant, function (error, results, fields) {
     if (error) {
       throw error;
     }

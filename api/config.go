@@ -10,6 +10,7 @@ type MySqlConfig struct {
 	User string
 	Password string
 	Database string
+	Table string
 }
 
 func NewMySqlConfig() *MySqlConfig {
@@ -19,5 +20,6 @@ func NewMySqlConfig() *MySqlConfig {
 		User: os.Getenv("MY_SQL_USER"),
 		Password: os.Getenv("MY_SQL_PASSWORD"),
 		Database: os.Getenv("MY_SQL_DATABASE"),
+		Table: os.Getenv("MY_SQL_TABLE"),
 	}
 }
