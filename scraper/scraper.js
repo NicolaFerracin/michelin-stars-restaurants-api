@@ -47,7 +47,7 @@ const scrape = async (currentPage, totalPages = 1, restaurants = []) => {
     const lat = $card.data('lat');
     const lng = $card.data('lng');
 
-    restaurants.push({ rating, year, img, name, link, location, type, coords: { lat, lng } });
+    restaurants.push({ rating, year, img, name, link, location, type, lat, lng });
   });
 
   if (currentPage <= totalPages) {
