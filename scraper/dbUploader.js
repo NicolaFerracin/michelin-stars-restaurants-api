@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-require('dotenv').config();
+require('dotenv').config(__dirname + '../.env');
 
 const restaurants = JSON.parse(require('fs').readFileSync(__dirname + '/restaurants.json', 'utf8'));
 
@@ -18,7 +18,6 @@ restaurants.forEach(restaurant => {
     if (error) {
       throw error;
     }
-    console.log({ results, fields })
   });
 })
 
