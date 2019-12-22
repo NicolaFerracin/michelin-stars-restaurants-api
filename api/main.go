@@ -20,16 +20,16 @@ func init() {
 	}
 }
 
-func returnAllRestaurants(w http.ResponseWriter, r *http.Request) {
+func findAllRestaurants(w http.ResponseWriter, r *http.Request) {
 	restaurants := []Restaurants{}
 	db.Find(&restaurants)
-	fmt.Println("Endpoint Hit: returnAllRestaurants")
 	json.NewEncoder(w).Encode(restaurants)
 }
 
 func homePage(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Welcome to HomePage!")
-	fmt.Println("Endpoint Hit: HomePage")
+	p := "./README.html"
+	w.Header().Set("Content-type", "text/html")
+	http.ServeFile(w, r, p)
 }
 
 func handleRequests() {
@@ -38,7 +38,7 @@ func handleRequests() {
 
 	myRouter := mux.NewRouter().StrictSlash(true)
 	myRouter.HandleFunc("/", homePage)
-	myRouter.HandleFunc("/restaurants", returnAllRestaurants)
+	myRouter.HandleFunc("/restaurants", findAllRestaurants).Methods("GET")
 	
 	log.Fatal(http.ListenAndServe(":10000", myRouter))
 }
