@@ -1,7 +1,7 @@
 const rp = require('request-promise');
 const cheerio = require('cheerio');
 
-const { baseUrl, query, itemsPerPage, ratingsMap, selectors, regEx } = require('./utils')
+const { baseUrl, query, itemsPerPage, ratingsMap, selectors, regEx, timeout } = require('./utils')
 
 class Scraper {
   constructor() {
@@ -58,9 +58,10 @@ class Scraper {
     });
 
     const end = new Date();
+    const delay = this.rateLimiterDelay - (end - start)
+    await timeout(delay)
 
-    await setTimeout(() => { }, this.rateLimiterDelay - (end - start))
-    if (currentPage <= 3) {
+    if (currentPage <= this.totalPages) {
       return this.scrape(currentPage + 1);
     }
     return;

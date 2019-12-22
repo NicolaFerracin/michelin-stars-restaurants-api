@@ -26,4 +26,6 @@ const regEx = {
   totalItems: /(?<=of ).*(?= Restaurants)/
 }
 
-module.exports = { baseUrl, query, itemsPerPage, ratingsMap, selectors, regEx };
+const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+module.exports = { baseUrl, query, itemsPerPage, ratingsMap, selectors, regEx, timeout };
