@@ -16,6 +16,12 @@ class Scraper {
 
   getRestaurants = () => this.restaurants;
 
+  removeDuplicates = () => {
+    this.restaurants = this.restaurants.filter((r, index, self) =>
+      index === self.findIndex((t) => JSON.stringify(t) === JSON.stringify(r))
+    )
+  }
+
   setTotalPages = $ => {
     const totalItems = Number($('h1').text().match(regEx.totalItems)[0].replace(/[\.,]/g, ''));
     this.totalPages = Math.ceil(totalItems / itemsPerPage);
