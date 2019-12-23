@@ -26,18 +26,10 @@ func findAllRestaurants(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(restaurants)
 }
 
-func homePage(w http.ResponseWriter, r *http.Request) {
-	p := "./README.html"
-	w.Header().Set("Content-type", "text/html")
-	http.ServeFile(w, r, p)
-}
-
 func handleRequests() {
 	log.Println("Starting server at http://127.0.0.1:10000/")
-	log.Println("Quit the server with CONTROL-C.")
 
 	myRouter := mux.NewRouter().StrictSlash(true)
-	myRouter.HandleFunc("/", homePage)
 	myRouter.HandleFunc("/restaurants", findAllRestaurants).Methods("GET")
 	
 	log.Fatal(http.ListenAndServe(":10000", myRouter))
