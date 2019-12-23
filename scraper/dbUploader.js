@@ -16,6 +16,22 @@ class DBUploader {
 
   disconnect = () => this.connection.end();
 
+  clearTable = () => {
+    this.connection.query(`DELETE FROM ${process.env.MY_SQL_TABLE}`, error => {
+      if (error) {
+        throw error;
+      }
+    });
+  }
+
+  resetAutoIncrement = () => {
+    this.connection.query(`ALTER TABLE ${process.env.MY_SQL_TABLE} AUTO_INCREMENT = 1`, error => {
+      if (error) {
+        throw error;
+      }
+    });
+  }
+
   uploadRestaurants = restaurants => {
     restaurants.forEach(restaurant => {
       this.connection.query(`INSERT INTO ${process.env.MY_SQL_TABLE} SET ?`, restaurant, error => {
