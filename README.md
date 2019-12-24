@@ -18,3 +18,13 @@ Built in Node.js, using `mysql` NPM packages
 ## API
 
 Built in go, using `mux` and `gorm`
+
+The only available endpoint is `/restaurants`.
+
+```js
+fetch('https://api.nicolaferracin.com/michelin/restaurants')
+  .then(res => res.json())
+  .then(restaurants => {
+    // Do something with restaurants array
+  }
+```
