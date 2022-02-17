@@ -18,9 +18,13 @@ def scrape_website():
 
 
 def upload_to_postgres(file):
-    print('Connecting to the database')
+    print('Connecting to the database...')
     postgres_conn = Postgres()
+
+    print('Inserting restaurants...')
     postgres_conn.insert_restaurants(file)
+
+    print('Done!')
 
 
 if __name__ == "__main__":
