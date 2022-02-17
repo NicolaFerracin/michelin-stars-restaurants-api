@@ -11,6 +11,7 @@ user = os.environ["postgres_user"]
 host = os.environ["postgres_host"]
 db_name = os.environ["postgres_db"]
 password = os.environ["postgres_pass"]
+port = os.environ["postgres_port"]
 
 
 class Postgres:
@@ -28,7 +29,7 @@ class Postgres:
 
     def insert_restaurants(self, file):
         engine = create_engine(
-            f'postgresql+psycopg2://{user}:{password}@{host}:5432/{db_name}')
+            f'postgresql+psycopg2://{user}:{password}@{host}:{port}/{db_name}')
         Session = sessionmaker(bind=engine)
 
         with Session() as session:
