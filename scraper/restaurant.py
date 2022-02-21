@@ -12,5 +12,8 @@ class Restaurant:
         self.long = long
 
     def __str__(self):
-        stars = "*" * self.rating
-        return f"Restaurant: {self.name} in {self.location} from {self.guide} \nRating: {stars} \nType: {self.type} \nLocation: {self.lat}, {self.long}"
+        return_string = f"Restaurant: {self.name} in {self.location} from {self.guide} \n"
+        return_string += f"Rating: {'*' * self.rating} \n"
+        return_string += f"Type: {self.type} \n"
+        return_string += f"Location: {self.lat}, {self.long}"
+        return return_string

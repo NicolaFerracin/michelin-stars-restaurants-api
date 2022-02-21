@@ -8,6 +8,7 @@ query = 'en/restaurants/3-stars-michelin/2-stars-michelin/1-star-michelin/page/'
 cards_per_page = 20
 ratings_map = {'o': 3, 'n': 2, 'm': 1}
 
+# Class names for scraping
 selectors = {
     'cards': '.card__menu',
     'rating': '.fa-michelin',
@@ -32,26 +33,30 @@ class Scraper:
     def get_restaurants(self):
         return self.restaurants
 
-    def update_content(self, current_page):
+    def refresh_content(self, current_page):
         self.url = base_url + query + str(current_page)
         self.content = bs(requests.get(self.url).content, 'html.parser')
 
     def remove_duplicates(self):
+        # Used if running scraper multiple times
         self.restaurants = [
             i for n, i in enumerate(self.restaurants)
             if i not in self.restaurants[:n]
         ]
 
     def get_total_pages(self, content):
+        # Get second to last page number to get total page count
         page_numbers = content.select(selectors["page_numbers"])[-2].get_text()
         return int(page_numbers)
 
     def scrape(self, current_page=1):
-        self.update_content(current_page)
+        # Refresh HTML content for current page
+        self.refresh_content(current_page)
         cards = self.content.select(selectors['cards'])
 
         print("Scraping:", self.url)
 
+        # Scrape Michellin "cards"
         for card in cards:
             rating_tag = card.select_one(selectors['rating']).get_text()
             rating = ratings_map[rating_tag]
@@ -67,15 +72,18 @@ class Scraper:
             link = base_url + name_tag.attrs["href"]
             location = card.select_one(
                 selectors['location']).get_text().strip()
-            type = card.select_one(selectors['type']).get_text().strip()
+
+            cuisine_type = card.select_one(
+                selectors['type']).get_text().strip()
 
             lat = card.attrs["data-lat"]
             long = card.attrs["data-lng"]
 
             cur_restaurant = Restaurant(name, rating, guide, img, link,
-                                        location, type, lat, long)
+                                        location, cuisine_type, lat, long)
             self.restaurants.append(cur_restaurant)
 
+        # Add delay to avoid timeouts
         time.sleep(self.delay_rate)
 
         if current_page < self.total_pages:
