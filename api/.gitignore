@@ -1,0 +1,8 @@
+# dependencies
+node_modules
+
+# production
+/dist
+
+# Keep environment variables out of version control
+.env
