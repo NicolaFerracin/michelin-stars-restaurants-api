@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,4 +5,19 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model restaurants {
+  id       BigInt  @id
+  name     String?
+  rating   BigInt?
+  guide    String?
+  img      String?
+  link     String?
+  location String?
+  type     String?
+  lat      Float?
+  long     Float?
+
+  @@index([id], map: "ix_restaurants_id")
 }

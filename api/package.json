@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "watch": "tsc -w",
-    "dev": "node dist/index.js"
+    "dev": "node dist/index.js",
+    "migrate": "prisma migrate dev --name init",
+    "pull": "prisma db pull"
   },
   "license": "MIT",
   "dependencies": {
