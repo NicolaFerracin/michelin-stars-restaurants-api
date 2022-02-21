@@ -14,7 +14,7 @@ def scrape_website():
 
     # Convert restaurants into a pandas DataFrame and save output
     df = pd.DataFrame([r.__dict__ for r in scraper_instance.restaurants])
-    df.to_csv(output_name)
+    df.to_csv(output_name, index=False)
 
     print(f"Output saved: {output_name}")
     return output_name

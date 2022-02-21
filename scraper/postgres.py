@@ -38,4 +38,7 @@ class Postgres:
             df.to_sql('restaurants',
                       con=engine,
                       if_exists='replace',
-                      index=False)
+                      index=True,
+                      index_label="id")
+
+            engine.execute('ALTER TABLE restaurants ADD PRIMARY KEY (id);')
