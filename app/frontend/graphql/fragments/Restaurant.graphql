@@ -1,5 +1,12 @@
 fragment Restaurant on Restaurants {
+  id
   name
+  rating
+  guide
+  img
+  link
+  location
+  type
   lat
   long
 }
