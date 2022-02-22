@@ -1,0 +1,12 @@
+export { AggregateRestaurantsArgs } from "./AggregateRestaurantsArgs";
+export { CreateManyRestaurantsArgs } from "./CreateManyRestaurantsArgs";
+export { CreateRestaurantsArgs } from "./CreateRestaurantsArgs";
+export { DeleteManyRestaurantsArgs } from "./DeleteManyRestaurantsArgs";
+export { DeleteRestaurantsArgs } from "./DeleteRestaurantsArgs";
+export { FindFirstRestaurantsArgs } from "./FindFirstRestaurantsArgs";
+export { FindManyRestaurantsArgs } from "./FindManyRestaurantsArgs";
+export { FindUniqueRestaurantsArgs } from "./FindUniqueRestaurantsArgs";
+export { GroupByRestaurantsArgs } from "./GroupByRestaurantsArgs";
+export { UpdateManyRestaurantsArgs } from "./UpdateManyRestaurantsArgs";
+export { UpdateRestaurantsArgs } from "./UpdateRestaurantsArgs";
+export { UpsertRestaurantsArgs } from "./UpsertRestaurantsArgs";
