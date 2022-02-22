@@ -6,12 +6,17 @@
     "watch": "tsc -w",
     "dev": "node dist/index.js",
     "migrate": "prisma migrate dev --name init",
-    "pull": "prisma db pull"
+    "pull": "prisma db pull",
+    "gen": "prisma generate"
   },
   "license": "MIT",
   "dependencies": {
     "apollo-server": "^3.6.3",
-    "graphql": "^16.3.0",
+    "class-validator": "^0.13.2",
+    "graphql": "15.7.2",
+    "graphql-fields": "^2.0.3",
+    "graphql-scalars": "^1.14.1",
+    "reflect-metadata": "^0.1.13",
     "tsc": "^2.0.4",
     "type-graphql": "^1.1.1"
   },
@@ -20,6 +25,7 @@
     "@types/node": "^17.0.19",
     "prisma": "^3.9.2",
     "ts-node": "^10.5.0",
+    "typegraphql-prisma": "^0.19.0",
     "typescript": "^4.5.5"
   }
 }
