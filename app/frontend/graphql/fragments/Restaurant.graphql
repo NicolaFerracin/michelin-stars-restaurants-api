@@ -1,0 +1,5 @@
+fragment Restaurant on Restaurants {
+  name
+  lat
+  long
+}
