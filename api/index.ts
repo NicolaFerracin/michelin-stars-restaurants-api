@@ -2,7 +2,7 @@ const { ApolloServer } = require("apollo-server");
 import { PrismaClient } from "@prisma/client";
 import "reflect-metadata";
 import { buildSchemaSync } from "type-graphql";
-import { resolvers } from "../prisma/generated/type-graphql";
+import { resolvers } from "./prisma/generated/type-graphql";
 
 const PORT = process.env.PORT || 4000;
 
