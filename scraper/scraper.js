@@ -67,7 +67,7 @@ class Scraper {
     const delay = this.rateLimiterDelay - (end - start)
     await timeout(delay)
 
-    if (currentPage <= this.totalPages) {
+    if (currentPage < this.totalPages) {
       return this.scrape(currentPage + 1);
     }
     return;
