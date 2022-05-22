@@ -54,7 +54,7 @@ class Scraper {
       const img = $card.find(selectors.img).html().match(regEx.img)[0];
       const $title = $card.find(selectors.name);
       const name = $title.text().trim();
-      const link = `${baseUrl}${$title.attr('href')}`;
+      const link = `${baseUrl}${$title.attr('href').slice(1}`;
       const location = $card.find(selectors.location).text().trim();
       const type = $card.find(selectors.type).text().trim();
       const lat = $card.data('lat');
