@@ -23,10 +23,19 @@ class Scraper {
   }
 
   setTotalPages = $ => {
-    const totalItems = Number($('h1').text().match(regEx.totalItems)[0].replace(/[\.,]/g, ''));
-    this.totalPages = Math.ceil(totalItems / itemsPerPage);
+    const totalItemsText = $('h1').text();
+    const match = totalItemsText.match(regEx.totalItems);
+  
+    if (match && match.length > 0) {
+      const totalItems = Number(match[0].replace(/[\.,]/g, ''));
+      this.totalPages = Math.ceil(totalItems / itemsPerPage);
+      console.log("Total pages to scrape:", this.totalPages);
+    } else {
+      console.log("Failed to find total items in the page", totalItemsText);
+      this.totalPages = 0; 
+    }
   }
-
+  
   scrape = async (currentPage) => {
     const that = this;
     const start = new Date();
@@ -46,22 +55,28 @@ class Scraper {
       this.setTotalPages($);
     }
 
-    const cards = $(selectors.cards);
-    cards.each(function () {
-      const $card = $(this)
-      const rating = ratingsMap[$card.find(selectors.rating).text().trim()];
-      const year = $card.find(selectors.year).text().trim();
-      const img = $card.find(selectors.img).html().match(regEx.img)[0];
-      const $title = $card.find(selectors.name);
-      const name = $title.text().trim();
-      const link = `${baseUrl}${$title.attr('href')}`;
-      const location = $card.find(selectors.location).text().trim();
-      const type = $card.find(selectors.type).text().trim();
-      const lat = $card.data('lat');
-      const lng = $card.data('lng');
+    // due to errors try to collect cards if fail then simply continue
+    try {
+      const cards = $(selectors.cards);
+      cards.each(function () {
+        const $card = $(this)
+        const rating = $card.find(selectors.rating).html().match(/michelin-award/g).length;
+        const year = $card.find(selectors.year).text().trim();
+        const img = $card.find(selectors.img).html().match(regEx.img)[0];
+        const $title = $card.find(selectors.name);
+        const name = $title.text().trim();
+        const link = `${baseUrl}${$title.attr('href')}`;
+        const location = $card.find(selectors.location).attr('data-dtm-city').trim();
+        const type = $card.find(selectors.type).attr('data-cooking-type').trim();
+        const lat = $card.data('lat');
+        const lng = $card.data('lng');
 
-      that.restaurants.push({ rating, year, img, name, link, location, type, lat, lng });
-    });
+        that.restaurants.push({ rating, year, img, name, link, location, type, lat, lng });
+      });
+    }
+    catch (err) {
+      console.log(err)
+    }
 
     const end = new Date();
     const delay = this.rateLimiterDelay - (end - start)

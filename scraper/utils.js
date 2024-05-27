@@ -1,6 +1,6 @@
 const baseUrl = 'https://guide.michelin.com/'
 
-const query = 'en/restaurants/3-stars-michelin/2-stars-michelin/1-star-michelin/page/';
+const query = 'en/restaurants/all-starred/page/';
 
 const itemsPerPage = 20;
 
@@ -12,18 +12,18 @@ const ratingsMap = {
 
 const selectors = {
   cards: '.card__menu',
-  rating: '.card__menu-content--rating>.fa-michelin',
+  rating: '.distinction-icon',
   year: '.card__menu-content--rating>span',
   img: '.card__menu-image>a>noscript',
   name: '.card__menu-content--title>a',
   link: '.card__menu-content--title>a',
-  location: '.card__menu-footer--location',
-  type: '.card__menu-footer--price',
+  location: '.card__menu-image--top > div > div > div',
+  type: '.card__menu-image--top > div > div > div'
 }
 
 const regEx = {
   img: /(?<=src=").*(?=" alt)/,
-  totalItems: /(?<=of ).*(?= Restaurants)/
+  totalItems: /(?<=of ).*(?= restaurants)/
 }
 
 const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
